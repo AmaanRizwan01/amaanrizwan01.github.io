@@ -105,12 +105,20 @@
             height: 100%;
             z-index: 1;
             pointer-events: none;
+            overflow: hidden;
+        }
+
+        #tornado-container canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100% !important;
+            height: 100% !important;
         }
 
         @media (max-width: 768px) {
             #tornado-container {
-                width: 100%;
-                opacity: 0.4;
+                display: none;
             }
         }
 
@@ -207,15 +215,29 @@
         /* Nav link styles */
         .nav-link {
             cursor: pointer;
-            transition: color 0.3s;
+            transition: all 0.3s ease;
+            position: relative;
+            padding-bottom: 4px;
         }
         .nav-link:hover {
             color: #0aff64;
         }
-        
         .nav-link.active {
-            color: #0aff64;
-            text-shadow: 0 0 5px rgba(10, 255, 100, 0.5);
+            color: #00f0ff;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0%;
+            height: 1px;
+            background: #00f0ff;
+            transition: width 0.3s ease;
+            box-shadow: 0 0 8px #00f0ff;
+        }
+        .nav-link.active::after {
+            width: 100%;
         }
 
         /* HUD Animations */
@@ -274,18 +296,18 @@
                 <!-- Tornado 3D Container -->
                 <div id="tornado-container"></div>
                 
-                <!-- Tech HUD Overlay -->
-                <div class="absolute top-0 right-0 w-full md:w-1/2 h-full z-20 pointer-events-none select-none overflow-hidden">
+                <!-- Tech HUD Overlay (Hidden on mobile) -->
+                <div class="hidden md:block absolute top-0 right-0 w-1/2 h-full z-20 pointer-events-none select-none overflow-hidden">
                     <!-- Center Reticles -->
-                    <div class="absolute top-[40%] md:top-1/2 left-1/2 w-[300px] h-[300px] md:w-[400px] md:h-[400px] border border-cyber-primary/10 rounded-full animate-spin-slow" style="border-style: dashed;"></div>
-                    <div class="absolute top-[40%] md:top-1/2 left-1/2 w-[250px] h-[250px] md:w-[350px] md:h-[350px] border-t border-b border-cyber-accent/20 rounded-full animate-reverse-spin"></div>
+                    <div class="absolute top-1/2 left-1/2 w-[400px] h-[400px] border border-cyber-primary/10 rounded-full animate-spin-slow" style="border-style: dashed;"></div>
+                    <div class="absolute top-1/2 left-1/2 w-[350px] h-[350px] border-t border-b border-cyber-accent/20 rounded-full animate-reverse-spin"></div>
                     
                     <!-- Crosshairs -->
-                    <div class="absolute top-[40%] md:top-1/2 left-1/2 w-4 h-4 border border-cyber-primary/50 -translate-x-1/2 -translate-y-1/2"></div>
-                    <div class="absolute top-[40%] md:top-1/2 left-1/2 w-[600px] h-px bg-gradient-to-r from-transparent via-cyber-dim/20 to-transparent -translate-x-1/2 -translate-y-1/2"></div>
+                    <div class="absolute top-1/2 left-1/2 w-4 h-4 border border-cyber-primary/50 -translate-x-1/2 -translate-y-1/2"></div>
+                    <div class="absolute top-1/2 left-1/2 w-[600px] h-px bg-gradient-to-r from-transparent via-cyber-dim/20 to-transparent -translate-x-1/2 -translate-y-1/2"></div>
                     
                     <!-- HUD Info Top Right -->
-                    <div class="absolute top-[20%] right-10 font-mono text-[10px] text-cyber-primary/60 text-right space-y-1 hidden md:block">
+                    <div class="absolute top-[20%] right-10 font-mono text-[10px] text-cyber-primary/60 text-right space-y-1">
                         <div><span class="inline-block w-2 h-2 bg-cyber-accent/50 mr-2 animate-pulse"></span>SYSTEM_ACTIVE</div>
                         <div>T_VEL: 2400 m/s</div>
                         <div>H_ALT: 3.2 km</div>
@@ -293,12 +315,12 @@
                     </div>
                     
                     <!-- Scanning Line (Vertical) -->
-                    <div class="absolute top-0 left-10 h-full w-px bg-cyber-dim/10 hidden md:block">
+                    <div class="absolute top-0 left-10 h-full w-px bg-cyber-dim/10">
                         <div class="absolute top-0 left-[-2px] w-1 h-20 bg-cyber-primary/50 animate-scan"></div>
                     </div>
 
                     <!-- Bottom Code Snippet -->
-                    <div class="absolute bottom-32 right-20 font-mono text-[10px] text-cyber-dim/40 hidden md:block text-right leading-tight">
+                    <div class="absolute bottom-32 right-20 font-mono text-[10px] text-cyber-dim/40 text-right leading-tight">
                         <div>> initializing_core_sequence...</div>
                         <div>> loading_modules [32/40]</div>
                         <div>> buffer_overflow_protection: ON</div>
@@ -690,11 +712,51 @@
         gsap.ticker.lagSmoothing(0);
 
         // --- NAVIGATION MENU ---
-        document.querySelectorAll('.nav-link').forEach(link => {
+        const navLinks = document.querySelectorAll('.nav-link');
+        
+        navLinks.forEach(link => {
             link.addEventListener('click', (e) => {
                 const target = e.target.getAttribute('data-target');
                 lenis.scrollTo(target);
             });
+        });
+
+        // --- ACTIVE SECTION HIGHLIGHTING ---
+        const sections = [
+            { id: 'about', navTarget: '#about' },
+            { id: 'expertise', navTarget: '#expertise' },
+            { id: 'projects-wrapper', navTarget: '#projects-wrapper' },
+            { id: 'contact', navTarget: '#contact' }
+        ];
+
+        // Function to update active nav link
+        function setActiveNav(targetSelector) {
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('data-target') === targetSelector) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        // Create ScrollTriggers for each section
+        sections.forEach(section => {
+            ScrollTrigger.create({
+                trigger: `#${section.id}`,
+                start: 'top center',
+                end: 'bottom center',
+                onEnter: () => setActiveNav(section.navTarget),
+                onEnterBack: () => setActiveNav(section.navTarget),
+            });
+        });
+
+        // Special handler for hero section (when at top)
+        ScrollTrigger.create({
+            trigger: '#hero',
+            start: 'top top',
+            end: 'bottom center',
+            onEnter: () => setActiveNav(null),
+            onEnterBack: () => setActiveNav(null),
         });
 
         // --- CUSTOM CURSOR ---
@@ -785,6 +847,11 @@
         // --- TORNADO VORTEX EFFECT ---
         (function initTornado() {
             const tornadoContainer = document.getElementById('tornado-container');
+            
+            // Don't initialize on mobile devices (screen width <= 768px)
+            if (window.innerWidth <= 768) {
+                return;
+            }
             
             // Create separate scene for tornado
             const tornadoScene = new THREE.Scene();
@@ -1193,31 +1260,6 @@
                 toggleActions: "play none none reverse"
             }
         });
-
-        // --- NAV HIGHLIGHTING ---
-        const sections = ['hero', 'about', 'expertise', 'projects-wrapper', 'contact'];
-        
-        sections.forEach(id => {
-            const section = document.getElementById(id);
-            if(section) {
-                ScrollTrigger.create({
-                    trigger: section,
-                    start: "top 50%", 
-                    end: "bottom 50%",
-                    onEnter: () => updateNav(id),
-                    onEnterBack: () => updateNav(id)
-                });
-            }
-        });
-
-        function updateNav(id) {
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.classList.remove('active');
-                if(link.getAttribute('data-target') === `#${id}`) {
-                    link.classList.add('active');
-                }
-            });
-        }
 
     </script>
 </body>
