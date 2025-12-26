@@ -2,7 +2,8 @@
 <html lang="en" class="antialiased">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Viewport settings for responsiveness -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Amaan Rizwan | Backend & Automation Engineer</title>
     
     <!-- Fonts -->
@@ -63,11 +64,22 @@
             pointer-events: none;
         }
         
-        body {
-            background-color: #030305;
-            color: #e0e0e0;
+        /* --- BACKGROUND FIX --- */
+        html {
+            background-color: #030305; /* Background color on HTML */
+            width: 100%;
+            max-width: 100%;
             overflow-x: hidden;
+        }
+
+        body {
+            background-color: transparent; /* Transparent body to see fixed canvas behind */
+            color: #e0e0e0;
             margin: 0;
+            padding: 0;
+            width: 100%;
+            max-width: 100%;
+            position: relative;
         }
 
         /* Custom Scrollbar */
@@ -85,14 +97,14 @@
             background: #00f0ff;
         }
 
-        /* Three.js Canvas */
+        /* Three.js Canvas - Fixed in background */
         #webgl-container {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100vh;
-            z-index: -1;
+            z-index: -1; /* Behind everything */
             pointer-events: none;
         }
 
@@ -165,6 +177,7 @@
         /* Horizontal Scroll Section */
         #projects-wrapper {
             overflow: hidden;
+            width: 100%;
         }
         
         .horizontal-section {
@@ -288,6 +301,14 @@
             min-width: 90px;
         }
 
+        /* Mobile specific style for sound toggle */
+        @media (max-width: 768px) {
+            #sound-toggle {
+                bottom: 20px;
+                left: 20px;
+            }
+        }
+
         /* Shuffle animation for letters */
         @keyframes glitch {
             0%, 100% { opacity: 1; }
@@ -358,7 +379,7 @@
         <div id="smooth-content">
 
             <!-- HERO SECTION -->
-            <section id="hero" class="h-screen flex flex-col justify-center items-center relative px-6">
+            <section id="hero" class="h-screen flex flex-col justify-center items-center relative px-6 overflow-hidden">
                 <!-- Tornado 3D Container -->
                 <div id="tornado-container"></div>
                 
@@ -396,7 +417,7 @@
                 
                 <div class="max-w-6xl w-full relative z-10">
                     <p class="font-mono text-cyber-primary mb-4 reveal-text">HELLO_WORLD</p>
-                    <h1 class="font-display text-6xl md:text-8xl font-bold uppercase tracking-tight leading-none mb-6">
+                    <h1 class="font-display text-5xl md:text-8xl font-bold uppercase tracking-tight leading-none mb-6">
                         <span class="block reveal-text">Amaan</span>
                         <span class="block reveal-text text-transparent bg-clip-text bg-gradient-to-r from-white to-cyber-dim">Rizwan</span>
                     </h1>
@@ -444,7 +465,7 @@
                         <div class="absolute -top-10 -left-10 w-20 h-20 border-t border-l border-cyber-dim opacity-30"></div>
                         <div class="absolute -bottom-10 -right-10 w-20 h-20 border-b border-r border-cyber-dim opacity-30"></div>
                         
-                        <h2 class="font-display text-4xl md:text-5xl font-bold mb-6">
+                        <h2 class="font-display text-3xl md:text-5xl font-bold mb-6">
                             Precision in <br>
                             <span class="text-cyber-accent">Code & Data</span>
                         </h2>
@@ -470,7 +491,7 @@
             <section id="expertise" class="py-24 px-6 bg-cyber-dark/50">
                 <div class="max-w-6xl mx-auto">
                     <div class="mb-16 border-b border-cyber-gray pb-4 flex justify-between items-end">
-                        <h2 class="font-display text-4xl md:text-5xl font-bold">CORE MODULES</h2>
+                        <h2 class="font-display text-3xl md:text-5xl font-bold">CORE MODULES</h2>
                         <span class="font-mono text-cyber-dim hidden md:block">SYSTEM_CAPABILITIES</span>
                     </div>
 
@@ -517,44 +538,44 @@
                 <!-- Infinite Scroll 1 -->
                 <div class="relative flex overflow-x-hidden group">
                     <div class="animate-marquee whitespace-nowrap py-4">
-                        <span class="text-4xl font-display font-bold text-cyber-gray mx-8">PYTHON</span>
-                        <span class="text-4xl font-display font-bold text-white mx-8">FLASK</span>
-                        <span class="text-4xl font-display font-bold text-cyber-gray mx-8">JAVASCRIPT</span>
-                        <span class="text-4xl font-display font-bold text-white mx-8">SQL</span>
-                        <span class="text-4xl font-display font-bold text-cyber-gray mx-8">PHP</span>
-                        <span class="text-4xl font-display font-bold text-white mx-8">NUMPY</span>
-                        <span class="text-4xl font-display font-bold text-cyber-gray mx-8">PANDAS</span>
-                        <span class="text-4xl font-display font-bold text-white mx-8">GIT</span>
+                        <span class="text-2xl md:text-4xl font-display font-bold text-cyber-gray mx-4 md:mx-8">PYTHON</span>
+                        <span class="text-2xl md:text-4xl font-display font-bold text-white mx-4 md:mx-8">FLASK</span>
+                        <span class="text-2xl md:text-4xl font-display font-bold text-cyber-gray mx-4 md:mx-8">JAVASCRIPT</span>
+                        <span class="text-2xl md:text-4xl font-display font-bold text-white mx-4 md:mx-8">SQL</span>
+                        <span class="text-2xl md:text-4xl font-display font-bold text-cyber-gray mx-4 md:mx-8">PHP</span>
+                        <span class="text-2xl md:text-4xl font-display font-bold text-white mx-4 md:mx-8">NUMPY</span>
+                        <span class="text-2xl md:text-4xl font-display font-bold text-cyber-gray mx-4 md:mx-8">PANDAS</span>
+                        <span class="text-2xl md:text-4xl font-display font-bold text-white mx-4 md:mx-8">GIT</span>
                     </div>
                     <div class="absolute top-0 animate-marquee2 whitespace-nowrap py-4">
-                        <span class="text-4xl font-display font-bold text-cyber-gray mx-8">PYTHON</span>
-                        <span class="text-4xl font-display font-bold text-white mx-8">FLASK</span>
-                        <span class="text-4xl font-display font-bold text-cyber-gray mx-8">JAVASCRIPT</span>
-                        <span class="text-4xl font-display font-bold text-white mx-8">SQL</span>
-                        <span class="text-4xl font-display font-bold text-cyber-gray mx-8">PHP</span>
-                        <span class="text-4xl font-display font-bold text-white mx-8">NUMPY</span>
-                        <span class="text-4xl font-display font-bold text-cyber-gray mx-8">PANDAS</span>
-                        <span class="text-4xl font-display font-bold text-white mx-8">GIT</span>
+                        <span class="text-2xl md:text-4xl font-display font-bold text-cyber-gray mx-4 md:mx-8">PYTHON</span>
+                        <span class="text-2xl md:text-4xl font-display font-bold text-white mx-4 md:mx-8">FLASK</span>
+                        <span class="text-2xl md:text-4xl font-display font-bold text-cyber-gray mx-4 md:mx-8">JAVASCRIPT</span>
+                        <span class="text-2xl md:text-4xl font-display font-bold text-white mx-4 md:mx-8">SQL</span>
+                        <span class="text-2xl md:text-4xl font-display font-bold text-cyber-gray mx-4 md:mx-8">PHP</span>
+                        <span class="text-2xl md:text-4xl font-display font-bold text-white mx-4 md:mx-8">NUMPY</span>
+                        <span class="text-2xl md:text-4xl font-display font-bold text-cyber-gray mx-4 md:mx-8">PANDAS</span>
+                        <span class="text-2xl md:text-4xl font-display font-bold text-white mx-4 md:mx-8">GIT</span>
                     </div>
                 </div>
                 
                 <!-- Infinite Scroll 2 (Reverse) -->
                 <div class="relative flex overflow-x-hidden group mt-4">
                     <div class="animate-marquee-reverse whitespace-nowrap py-4">
-                        <span class="text-4xl font-display font-bold text-white mx-8">WORDPRESS</span>
-                        <span class="text-4xl font-display font-bold text-cyber-gray mx-8">WOOCOMMERCE</span>
-                        <span class="text-4xl font-display font-bold text-white mx-8">N8N</span>
-                        <span class="text-4xl font-display font-bold text-cyber-gray mx-8">OLLAMA</span>
-                        <span class="text-4xl font-display font-bold text-white mx-8">JAVA</span>
-                        <span class="text-4xl font-display font-bold text-cyber-gray mx-8">ELEMENTOR</span>
+                        <span class="text-2xl md:text-4xl font-display font-bold text-white mx-4 md:mx-8">WORDPRESS</span>
+                        <span class="text-2xl md:text-4xl font-display font-bold text-cyber-gray mx-4 md:mx-8">WOOCOMMERCE</span>
+                        <span class="text-2xl md:text-4xl font-display font-bold text-white mx-4 md:mx-8">N8N</span>
+                        <span class="text-2xl md:text-4xl font-display font-bold text-cyber-gray mx-4 md:mx-8">OLLAMA</span>
+                        <span class="text-2xl md:text-4xl font-display font-bold text-white mx-4 md:mx-8">JAVA</span>
+                        <span class="text-2xl md:text-4xl font-display font-bold text-cyber-gray mx-4 md:mx-8">ELEMENTOR</span>
                     </div>
                     <div class="absolute top-0 animate-marquee2-reverse whitespace-nowrap py-4">
-                        <span class="text-4xl font-display font-bold text-white mx-8">WORDPRESS</span>
-                        <span class="text-4xl font-display font-bold text-cyber-gray mx-8">WOOCOMMERCE</span>
-                        <span class="text-4xl font-display font-bold text-white mx-8">N8N</span>
-                        <span class="text-4xl font-display font-bold text-cyber-gray mx-8">OLLAMA</span>
-                        <span class="text-4xl font-display font-bold text-white mx-8">JAVA</span>
-                        <span class="text-4xl font-display font-bold text-cyber-gray mx-8">ELEMENTOR</span>
+                        <span class="text-2xl md:text-4xl font-display font-bold text-white mx-4 md:mx-8">WORDPRESS</span>
+                        <span class="text-2xl md:text-4xl font-display font-bold text-cyber-gray mx-4 md:mx-8">WOOCOMMERCE</span>
+                        <span class="text-2xl md:text-4xl font-display font-bold text-white mx-4 md:mx-8">N8N</span>
+                        <span class="text-2xl md:text-4xl font-display font-bold text-cyber-gray mx-4 md:mx-8">OLLAMA</span>
+                        <span class="text-2xl md:text-4xl font-display font-bold text-white mx-4 md:mx-8">JAVA</span>
+                        <span class="text-2xl md:text-4xl font-display font-bold text-cyber-gray mx-4 md:mx-8">ELEMENTOR</span>
                     </div>
                 </div>
             </section>
@@ -562,18 +583,19 @@
             <!-- HORIZONTAL PROJECTS SECTION -->
             <section id="projects-wrapper" class="relative bg-cyber-black">
                 <div class="h-screen flex items-center overflow-hidden">
-                    <div class="absolute top-10 left-10 z-10">
-                        <h2 class="font-display text-5xl font-bold text-white">DEPLOYED<br><span class="text-cyber-primary">PROJECTS</span></h2>
+                    <div class="absolute top-20 left-10 z-10">
+                        <h2 class="font-display text-3xl md:text-5xl font-bold text-white">DEPLOYED<br><span class="text-cyber-primary">PROJECTS</span></h2>
                     </div>
                     
-                    <div id="projects-container" class="horizontal-section flex items-center h-full pl-[25vw] gap-10">
+                    <!-- Adjusted padding here: pt-28 -->
+                    <div id="projects-container" class="horizontal-section flex items-center h-full pl-[25vw] gap-10 pt-28">
                         
                         <!-- Project 1 -->
                         <div class="project-card w-[80vw] md:w-[50vw] h-[60vh] glass-panel flex flex-col md:flex-row border-t-4 border-cyber-primary p-0 overflow-hidden relative group shrink-0">
                             <div class="p-8 md:w-1/2 flex flex-col justify-between z-10 bg-cyber-black/90">
                                 <div>
                                     <span class="font-mono text-cyber-primary text-xs">FINTECH // BACKEND</span>
-                                    <h3 class="font-display text-3xl font-bold mt-2 mb-4">Provident Fund System</h3>
+                                    <h3 class="font-display text-2xl md:text-3xl font-bold mt-2 mb-4">Provident Fund System</h3>
                                     <p class="text-cyber-dim text-sm leading-relaxed mb-6">
                                         Backend system for automating provident fund calculations and insights. Built to handle large datasets (10k+ records) with AI-assisted prediction.
                                     </p>
@@ -601,7 +623,7 @@
                             <div class="p-8 md:w-1/2 flex flex-col justify-between z-10 bg-cyber-black/90">
                                 <div>
                                     <span class="font-mono text-cyber-secondary text-xs">E-COMMERCE // FULL STACK</span>
-                                    <h3 class="font-display text-3xl font-bold mt-2 mb-4">Route 21 Platform</h3>
+                                    <h3 class="font-display text-2xl md:text-3xl font-bold mt-2 mb-4">Route 21 Platform</h3>
                                     <p class="text-cyber-dim text-sm leading-relaxed mb-6">
                                         Full-scale e-commerce platform for a real business client. Custom PHP/JS tailored functionality with focused UI/UX optimization for production.
                                     </p>
@@ -626,7 +648,7 @@
                             <div class="p-8 md:w-1/2 flex flex-col justify-between z-10 bg-cyber-black/90">
                                 <div>
                                     <span class="font-mono text-cyber-accent text-xs">WEBGL // INTERACTIVE</span>
-                                    <h3 class="font-display text-3xl font-bold mt-2 mb-4">3D Portfolio</h3>
+                                    <h3 class="font-display text-2xl md:text-3xl font-bold mt-2 mb-4">3D Portfolio</h3>
                                     <p class="text-cyber-dim text-sm leading-relaxed mb-6">
                                         Modern, interactive portfolio with 3D elements. Focused on performance optimization, smooth animations, and clean presentation using R3F.
                                     </p>
@@ -1357,6 +1379,14 @@
                 tornadoScene.add(ring);
             }
             
+            // Handle Mobile Visibility
+            function updateCoreVisibility() {
+                const isMobile = window.innerWidth < 768;
+                core.visible = !isMobile;
+                innerCore.visible = !isMobile;
+            }
+            updateCoreVisibility(); // Initial check
+
             // Tornado animation clock
             const tornadoClock = new THREE.Clock();
             
@@ -1395,6 +1425,8 @@
                 tornadoCamera.aspect = width / height;
                 tornadoCamera.updateProjectionMatrix();
                 tornadoRenderer.setSize(width, height);
+                
+                updateCoreVisibility(); // Check visibility on resize
             });
         })();
 
