@@ -786,6 +786,9 @@
         let fadeInterval = null;
         let wasPlayingBeforeHidden = false;
         
+        // 1. Detect Mobile Device
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
         // Characters for shuffle effect
         const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%&*!?';
         
@@ -880,20 +883,29 @@
             shuffleText(soundText, currentText, 300);
         });
         
-        // Only use Visibility API (ignores blur/focus events)
-        document.addEventListener('visibilitychange', () => {
+        // Optimized Visibility Handler
+        function handleVisibilityChange() {
             if (document.hidden) {
-                // Tab hidden (switched tabs or minimized)
+                // --- PAGE HIDDEN (Tab switch, Minimized, Screen off) ---
                 if (isSoundOn && !bgAudio.paused) {
                     wasPlayingBeforeHidden = true;
-                    fadeVolume(0, 500, () => {
+                    
+                    if (isMobile) {
+                        // MOBILE SPECIFIC: Pause IMMEDIATELY. 
+                        // Mobile browsers often freeze JS execution instantly. 
+                        // If we try to fade out, the loop might freeze, leaving audio playing or stuck.
                         bgAudio.pause();
-                    });
+                    } else {
+                        // DESKTOP: We can afford the fancy fade-out
+                        fadeVolume(0, 500, () => {
+                            bgAudio.pause();
+                        });
+                    }
                 }
             } else {
-                // Tab visible again
+                // --- PAGE VISIBLE (User returned) ---
                 if (isSoundOn && wasPlayingBeforeHidden) {
-                    bgAudio.volume = 0;
+                    bgAudio.volume = 0; // Reset volume to 0 before playing
                     bgAudio.play().then(() => {
                         fadeVolume(targetVolume, 800);
                     }).catch(e => {
@@ -901,6 +913,18 @@
                     });
                 }
                 wasPlayingBeforeHidden = false;
+            }
+        }
+
+        // Add Event Listeners
+        document.addEventListener('visibilitychange', handleVisibilityChange);
+
+        // MOBILE EXTRA SAFETY: 'pagehide' fires when the user hits the Home button 
+        // or switches apps, often more reliably than visibilitychange on older devices.
+        window.addEventListener('pagehide', () => {
+            if (isMobile && isSoundOn && !bgAudio.paused) {
+                wasPlayingBeforeHidden = true;
+                bgAudio.pause();
             }
         });
 
