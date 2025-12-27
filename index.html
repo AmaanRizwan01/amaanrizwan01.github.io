@@ -2,8 +2,8 @@
 <html lang="en" class="antialiased">
 <head>
     <meta charset="UTF-8">
-    <!-- Viewport settings for responsiveness -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <!-- Viewport: shrink-to-fit=no added for iOS safety -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
     <title>Amaan Rizwan | Backend & Automation Engineer</title>
     
     <!-- Fonts -->
@@ -60,16 +60,11 @@
             overflow: hidden;
         }
         
-        .lenis.lenis-scrolling iframe {
-            pointer-events: none;
-        }
-        
-        /* --- BACKGROUND FIX --- */
+        /* --- BACKGROUND & LAYOUT FIXES --- */
         html {
             background-color: #030305;
             width: 100%;
-            max-width: 100%;
-            overflow-x: hidden;
+            overflow-x: hidden; /* Prevents horizontal scroll/zoom */
         }
 
         body {
@@ -78,11 +73,11 @@
             margin: 0;
             padding: 0;
             width: 100%;
-            max-width: 100%;
+            overflow-x: hidden; /* Double safety */
             position: relative;
         }
 
-        /* Custom Scrollbar */
+        /* --- RESTORED CUSTOM SCROLLBAR --- */
         ::-webkit-scrollbar {
             width: 6px;
         }
@@ -106,6 +101,7 @@
             height: 100vh;
             z-index: -1;
             pointer-events: none;
+            overflow: hidden;
         }
 
         /* Tornado Container */
@@ -124,24 +120,6 @@
             background: rgba(10, 10, 15, 0.6);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .neon-border {
-            position: relative;
-        }
-        .neon-border::after {
-            content: '';
-            position: absolute;
-            bottom: -1px;
-            left: 0;
-            width: 0%;
-            height: 1px;
-            background: #00f0ff;
-            transition: width 0.4s ease;
-            box-shadow: 0 0 10px #00f0ff;
-        }
-        .neon-border:hover::after {
-            width: 100%;
         }
 
         /* Custom Cursor */
@@ -171,6 +149,7 @@
         #projects-wrapper {
             overflow: hidden;
             width: 100%;
+            max-width: 100vw;
         }
         
         .horizontal-section {
@@ -180,35 +159,15 @@
         }
         
         /* Marquee Animations */
-        .animate-marquee {
-            animation: marquee 25s linear infinite;
-        }
-        .animate-marquee2 {
-            animation: marquee2 25s linear infinite;
-        }
-        .animate-marquee-reverse {
-            animation: marquee-reverse 25s linear infinite;
-        }
-        .animate-marquee2-reverse {
-            animation: marquee2-reverse 25s linear infinite;
-        }
+        .animate-marquee { animation: marquee 25s linear infinite; }
+        .animate-marquee2 { animation: marquee2 25s linear infinite; }
+        .animate-marquee-reverse { animation: marquee-reverse 25s linear infinite; }
+        .animate-marquee2-reverse { animation: marquee2-reverse 25s linear infinite; }
 
-        @keyframes marquee {
-            0% { transform: translateX(0%); }
-            100% { transform: translateX(-100%); }
-        }
-        @keyframes marquee2 {
-            0% { transform: translateX(100%); }
-            100% { transform: translateX(0%); }
-        }
-        @keyframes marquee-reverse {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(0%); }
-        }
-        @keyframes marquee2-reverse {
-            0% { transform: translateX(0%); }
-            100% { transform: translateX(100%); }
-        }
+        @keyframes marquee { 0% { transform: translateX(0%); } 100% { transform: translateX(-100%); } }
+        @keyframes marquee2 { 0% { transform: translateX(100%); } 100% { transform: translateX(0%); } }
+        @keyframes marquee-reverse { 0% { transform: translateX(-100%); } 100% { transform: translateX(0%); } }
+        @keyframes marquee2-reverse { 0% { transform: translateX(0%); } 100% { transform: translateX(100%); } }
         
         /* Nav link styles */
         .nav-link {
@@ -249,7 +208,7 @@
             animation: scan 4s linear infinite;
         }
 
-        /* Sound Toggle Button - Clean & Glowing */
+        /* Sound Toggle Button */
         #sound-toggle {
             position: fixed;
             bottom: 90px;
@@ -260,27 +219,19 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            
-            /* Text Styling */
             font-family: 'JetBrains Mono', monospace;
             font-size: 13px;
             text-transform: uppercase;
             letter-spacing: 1px;
             color: #ffffff;
-            
-            /* Glow Effect */
             text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
-            
-            /* Clean look (no border/bg) */
             background: transparent;
             border: none;
             padding: 0;
-            
             transition: text-shadow 0.3s ease, transform 0.3s ease;
         }
         
         #sound-toggle:hover {
-            /* Stronger glow on hover */
             text-shadow: 0 0 15px rgba(255, 255, 255, 0.8), 0 0 30px rgba(255, 255, 255, 0.4);
             transform: scale(1.05);
         }
@@ -296,36 +247,22 @@
 
         /* Mobile specific styles */
         @media (max-width: 768px) {
-            /* Move sound button closer */
             #sound-toggle {
                 bottom: 20px;
                 left: 20px;
             }
-            
-            /* Hide the tornado model on mobile */
             #tornado-container {
                 display: none;
             }
-
-            /* Hide custom cursor on mobile */
             #custom-cursor {
                 display: none;
             }
-        }
-
-        /* Shuffle animation for letters */
-        @keyframes glitch {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.8; }
-        }
-        
-        .shuffle-letter {
-            display: inline-block;
-            animation: glitch 0.05s ease-in-out;
+            /* Safety for horizontal sections */
+            #projects-wrapper { max-width: 100%; }
         }
     </style>
 </head>
-<body class="selection:bg-cyber-primary selection:text-black">
+<body class="selection:bg-cyber-primary selection:text-black overflow-x-hidden">
 
     <!-- Background Audio -->
     <audio id="bg-audio" loop preload="auto">
@@ -353,7 +290,7 @@
     <!-- WebGL Background -->
     <div id="webgl-container"></div>
 
-    <!-- Sound Toggle Button - Fixed Bottom Left -->
+    <!-- Sound Toggle Button -->
     <div id="sound-toggle">
         <svg id="sound-icon-off" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path>
@@ -379,7 +316,7 @@
         </div>
     </header>
 
-    <main id="smooth-wrapper">
+    <main id="smooth-wrapper" class="w-full overflow-x-hidden">
         <div id="smooth-content">
 
             <!-- HERO SECTION -->
@@ -387,35 +324,29 @@
                 <!-- Tornado 3D Container -->
                 <div id="tornado-container"></div>
                 
-                <!-- Tech HUD Overlay -->
+                <!-- Tech HUD Overlay - RELATIVE WIDTHS FIX -->
                 <div class="absolute top-0 right-0 w-full md:w-1/2 h-full z-20 pointer-events-none select-none overflow-hidden">
-                    <!-- Center Reticles -->
-                    <div class="absolute top-[40%] md:top-1/2 left-1/2 w-[300px] h-[300px] md:w-[400px] md:h-[400px] border border-cyber-primary/10 rounded-full animate-spin-slow" style="border-style: dashed;"></div>
-                    <div class="absolute top-[40%] md:top-1/2 left-1/2 w-[250px] h-[250px] md:w-[350px] md:h-[350px] border-t border-b border-cyber-accent/20 rounded-full animate-reverse-spin"></div>
+                    <!-- Center Reticles: Adjusted for mobile fitting -->
+                    <div class="absolute top-[40%] md:top-1/2 left-1/2 w-[280px] h-[280px] md:w-[400px] md:h-[400px] border border-cyber-primary/10 rounded-full animate-spin-slow" style="border-style: dashed;"></div>
+                    <div class="absolute top-[40%] md:top-1/2 left-1/2 w-[230px] h-[230px] md:w-[350px] md:h-[350px] border-t border-b border-cyber-accent/20 rounded-full animate-reverse-spin"></div>
                     
-                    <!-- Crosshairs -->
                     <div class="absolute top-[40%] md:top-1/2 left-1/2 w-4 h-4 border border-cyber-primary/50 -translate-x-1/2 -translate-y-1/2"></div>
-                    <div class="absolute top-[40%] md:top-1/2 left-1/2 w-[600px] h-px bg-gradient-to-r from-transparent via-cyber-dim/20 to-transparent -translate-x-1/2 -translate-y-1/2"></div>
+                    <!-- Crosshair Line: w-[90vw] prevents horizontal scroll -->
+                    <div class="absolute top-[40%] md:top-1/2 left-1/2 w-[90vw] md:w-[600px] h-px bg-gradient-to-r from-transparent via-cyber-dim/20 to-transparent -translate-x-1/2 -translate-y-1/2"></div>
                     
-                    <!-- HUD Info Top Right -->
                     <div class="absolute top-[20%] right-10 font-mono text-[10px] text-cyber-primary/60 text-right space-y-1 hidden md:block">
                         <div><span class="inline-block w-2 h-2 bg-cyber-accent/50 mr-2 animate-pulse"></span>SYSTEM_ACTIVE</div>
                         <div>T_VEL: 2400 m/s</div>
                         <div>H_ALT: 3.2 km</div>
-                        <div>CORE_STABILITY: 98.4%</div>
                     </div>
                     
-                    <!-- Scanning Line (Vertical) -->
                     <div class="absolute top-0 left-10 h-full w-px bg-cyber-dim/10 hidden md:block">
                         <div class="absolute top-0 left-[-2px] w-1 h-20 bg-cyber-primary/50 animate-scan"></div>
                     </div>
 
-                    <!-- Bottom Code Snippet -->
                     <div class="absolute bottom-32 right-20 font-mono text-[10px] text-cyber-dim/40 hidden md:block text-right leading-tight">
                         <div>> initializing_core_sequence...</div>
                         <div>> loading_modules [32/40]</div>
-                        <div>> buffer_overflow_protection: ON</div>
-                        <div>> [================--] 89%</div>
                     </div>
                 </div>
                 
@@ -441,7 +372,6 @@
                     </div>
                 </div>
 
-                <!-- Scroll Indicator -->
                 <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
                     <span class="font-mono text-xs text-cyber-dim rotate-90 mb-8">SCROLL</span>
                     <div class="w-px h-12 bg-gradient-to-b from-cyber-primary to-transparent"></div>
@@ -500,7 +430,6 @@
                     </div>
 
                     <div class="grid md:grid-cols-2 gap-8">
-                        <!-- Card 1 -->
                         <div class="glass-panel p-8 group hover:border-cyber-primary transition-colors duration-500">
                             <div class="text-cyber-primary text-4xl mb-6">01</div>
                             <h3 class="font-display text-2xl font-bold mb-4 group-hover:text-cyber-primary transition-colors">Backend Engineering</h3>
@@ -515,7 +444,6 @@
                             </div>
                         </div>
 
-                        <!-- Card 2 -->
                         <div class="glass-panel p-8 group hover:border-cyber-accent transition-colors duration-500">
                             <div class="text-cyber-accent text-4xl mb-6">02</div>
                             <h3 class="font-display text-2xl font-bold mb-4 group-hover:text-cyber-accent transition-colors">Automation & Data</h3>
@@ -533,13 +461,12 @@
                 </div>
             </section>
 
-            <!-- TECH ARSENAL (Marquee) -->
-            <section id="tech-arsenal" class="py-16 bg-black overflow-hidden border-y border-cyber-gray">
+            <!-- TECH ARSENAL (Marquee) - Added max-w-full -->
+            <section id="tech-arsenal" class="py-16 bg-black overflow-hidden border-y border-cyber-gray w-full max-w-full">
                 <div class="max-w-7xl mx-auto mb-8 px-6">
                      <h3 class="font-mono text-cyber-dim text-sm">>> LOAD_LIBRARY: TECHNICAL_ARSENAL</h3>
                 </div>
                 
-                <!-- Infinite Scroll 1 -->
                 <div class="relative flex overflow-x-hidden group">
                     <div class="animate-marquee whitespace-nowrap py-4">
                         <span class="text-2xl md:text-4xl font-display font-bold text-cyber-gray mx-4 md:mx-8">PYTHON</span>
@@ -563,7 +490,6 @@
                     </div>
                 </div>
                 
-                <!-- Infinite Scroll 2 (Reverse) -->
                 <div class="relative flex overflow-x-hidden group mt-4">
                     <div class="animate-marquee-reverse whitespace-nowrap py-4">
                         <span class="text-2xl md:text-4xl font-display font-bold text-white mx-4 md:mx-8">WORDPRESS</span>
@@ -585,13 +511,12 @@
             </section>
 
             <!-- HORIZONTAL PROJECTS SECTION -->
-            <section id="projects-wrapper" class="relative bg-cyber-black">
+            <section id="projects-wrapper" class="relative bg-cyber-black w-full overflow-hidden">
                 <div class="h-screen flex items-center overflow-hidden">
                     <div class="absolute top-20 left-10 z-10">
                         <h2 class="font-display text-3xl md:text-5xl font-bold text-white">DEPLOYED<br><span class="text-cyber-primary">PROJECTS</span></h2>
                     </div>
                     
-                    <!-- Adjusted padding here: pt-28 -->
                     <div id="projects-container" class="horizontal-section flex items-center h-full pl-[25vw] gap-10 pt-28">
                         
                         <!-- Project 1 -->
@@ -747,7 +672,6 @@
                 <div class="relative z-10 text-center">
                     <p class="font-mono text-cyber-accent mb-4">INITIATE_COMMUNICATION</p>
                     <h2 class="font-display text-5xl md:text-7xl font-bold mb-8">LET'S BUILD<br>THE FUTURE</h2>
-                    <!-- Added 'click-trigger' and 'shuffle-btn' class here -->
                     <a href="mailto:amaanrizwan2016@gmail.com" class="inline-block border border-cyber-dim px-10 py-4 text-xl hover:bg-cyber-primary hover:text-black hover:scale-105 transition-all duration-300 font-mono click-trigger shuffle-btn">
                         amaanrizwan2016@gmail.com
                     </a>
@@ -769,12 +693,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
-    
-    <!-- Three.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
     <script>
-        // --- AUDIO CONTROL ---
+        // --- AUDIO CONTROL (Mobile Optimized) ---
         const bgAudio = document.getElementById('bg-audio');
         const soundToggle = document.getElementById('sound-toggle');
         const soundIconOff = document.getElementById('sound-icon-off');
@@ -786,13 +708,9 @@
         let fadeInterval = null;
         let wasPlayingBeforeHidden = false;
         
-        // 1. Detect Mobile Device
         const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-
-        // Characters for shuffle effect
         const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%&*!?';
         
-        // Shuffle text effect
         function shuffleText(element, finalText, duration = 500) {
             const originalText = finalText;
             const iterations = 10;
@@ -801,7 +719,6 @@
             
             const shuffleInterval = setInterval(() => {
                 let shuffledText = '';
-                
                 for (let i = 0; i < originalText.length; i++) {
                     if (originalText[i] === ' ' || originalText[i] === ':') {
                         shuffledText += originalText[i];
@@ -811,10 +728,8 @@
                         shuffledText += chars[Math.floor(Math.random() * chars.length)];
                     }
                 }
-                
                 element.textContent = shuffledText;
                 currentIteration++;
-                
                 if (currentIteration >= iterations) {
                     clearInterval(shuffleInterval);
                     element.textContent = originalText;
@@ -822,53 +737,37 @@
             }, intervalTime);
         }
         
-        // Fade audio volume
         function fadeVolume(targetVol, duration = 500, callback = null) {
-            if (fadeInterval) {
-                clearInterval(fadeInterval);
-            }
-            
+            if (fadeInterval) clearInterval(fadeInterval);
             const startVolume = bgAudio.volume;
             const volumeDiff = targetVol - startVolume;
             const steps = 20;
             const stepTime = duration / steps;
-            const volumeStep = volumeDiff / steps;
             let currentStep = 0;
             
             fadeInterval = setInterval(() => {
                 currentStep++;
-                bgAudio.volume = Math.max(0, Math.min(1, startVolume + (volumeStep * currentStep)));
-                
+                bgAudio.volume = Math.max(0, Math.min(1, startVolume + ((volumeDiff / steps) * currentStep)));
                 if (currentStep >= steps) {
                     clearInterval(fadeInterval);
-                    fadeInterval = null;
                     bgAudio.volume = targetVol;
                     if (callback) callback();
                 }
             }, stepTime);
         }
         
-        // Toggle sound with fade
         function toggleSound() {
             isSoundOn = !isSoundOn;
-            
             if (isSoundOn) {
-                // Start playing with fade in
                 bgAudio.volume = 0;
                 bgAudio.play().then(() => {
                     fadeVolume(targetVolume, 800);
                     soundIconOff.classList.add('hidden');
                     soundIconOn.classList.remove('hidden');
                     shuffleText(soundText, 'Sound: On');
-                }).catch(e => {
-                    console.log('Audio play failed:', e);
-                    isSoundOn = false;
-                });
+                }).catch(e => { isSoundOn = false; });
             } else {
-                // Fade out then pause
-                fadeVolume(0, 800, () => {
-                    bgAudio.pause();
-                });
+                fadeVolume(0, 800, () => { bgAudio.pause(); });
                 soundIconOff.classList.remove('hidden');
                 soundIconOn.classList.add('hidden');
                 shuffleText(soundText, 'Sound: Off');
@@ -877,50 +776,23 @@
         
         soundToggle.addEventListener('click', toggleSound);
         
-        // Hover effect with shuffle
-        soundToggle.addEventListener('mouseenter', () => {
-            const currentText = isSoundOn ? 'Sound: On' : 'Sound: Off';
-            shuffleText(soundText, currentText, 300);
-        });
-        
-        // Optimized Visibility Handler
         function handleVisibilityChange() {
             if (document.hidden) {
-                // --- PAGE HIDDEN (Tab switch, Minimized, Screen off) ---
                 if (isSoundOn && !bgAudio.paused) {
                     wasPlayingBeforeHidden = true;
-                    
-                    if (isMobile) {
-                        // MOBILE SPECIFIC: Pause IMMEDIATELY. 
-                        // Mobile browsers often freeze JS execution instantly. 
-                        // If we try to fade out, the loop might freeze, leaving audio playing or stuck.
-                        bgAudio.pause();
-                    } else {
-                        // DESKTOP: We can afford the fancy fade-out
-                        fadeVolume(0, 500, () => {
-                            bgAudio.pause();
-                        });
-                    }
+                    if (isMobile) bgAudio.pause();
+                    else fadeVolume(0, 500, () => { bgAudio.pause(); });
                 }
             } else {
-                // --- PAGE VISIBLE (User returned) ---
                 if (isSoundOn && wasPlayingBeforeHidden) {
-                    bgAudio.volume = 0; // Reset volume to 0 before playing
-                    bgAudio.play().then(() => {
-                        fadeVolume(targetVolume, 800);
-                    }).catch(e => {
-                        console.log('Audio resume failed:', e);
-                    });
+                    bgAudio.volume = 0;
+                    bgAudio.play().then(() => { fadeVolume(targetVolume, 800); }).catch(e => {});
                 }
                 wasPlayingBeforeHidden = false;
             }
         }
 
-        // Add Event Listeners
         document.addEventListener('visibilitychange', handleVisibilityChange);
-
-        // MOBILE EXTRA SAFETY: 'pagehide' fires when the user hits the Home button 
-        // or switches apps, often more reliably than visibilitychange on older devices.
         window.addEventListener('pagehide', () => {
             if (isMobile && isSoundOn && !bgAudio.paused) {
                 wasPlayingBeforeHidden = true;
@@ -928,82 +800,33 @@
             }
         });
 
-        // --- HOVER SOUND EFFECT LOGIC ---
-        const hoverSfx = document.getElementById('hover-sfx');
-        hoverSfx.volume = 0.3; // Set to 30%
+        // SFX and Menu Logic
+        const hoverSfx = document.getElementById('hover-sfx'); hoverSfx.volume = 0.3;
+        const btnHoverSfx = document.getElementById('btn-hover-sfx'); btnHoverSfx.volume = 0.3;
+        const btnClickSfx = document.getElementById('btn-click-sfx'); btnClickSfx.volume = 0.4;
 
-        // Function to play sound
-        function playHoverSound() {
-            if (!isSoundOn) return; // Strict check: No sound if disabled
-            hoverSfx.currentTime = 0;
-            hoverSfx.play().catch(e => {
-                // Ignore auto-play errors if interaction hasn't happened yet
-                // console.log("SFX play prevented"); 
-            });
-        }
+        function playHoverSound() { if (isSoundOn) { hoverSfx.currentTime = 0; hoverSfx.play().catch(e => {}); } }
+        function playBtnHoverSound() { if (isSoundOn) { btnHoverSfx.currentTime = 0; btnHoverSfx.play().catch(e => {}); } }
 
-        // 1. Select Menu Items (Nav Links)
-        const menuItems = document.querySelectorAll('.nav-link');
-        menuItems.forEach(item => {
-            // Save original text to avoid scrambling the scramble
+        document.querySelectorAll('.nav-link').forEach(item => {
             const originalText = item.textContent;
-
-            item.addEventListener('mouseenter', () => {
-                playHoverSound();
-                shuffleText(item, originalText, 300);
-            });
+            item.addEventListener('mouseenter', () => { playHoverSound(); shuffleText(item, originalText, 300); });
         });
 
-        // 2. Select Sound Toggle
-        if(soundToggle) {
-            soundToggle.addEventListener('mouseenter', playHoverSound);
-        }
+        if(soundToggle) soundToggle.addEventListener('mouseenter', playHoverSound);
 
-        // --- BUTTON HOVER LOGIC ---
-        const btnHoverSfx = document.getElementById('btn-hover-sfx');
-        btnHoverSfx.volume = 0.3; // Set volume 30%
-
-        function playBtnHoverSound() {
-            if (!isSoundOn) return; // Strict check
-            btnHoverSfx.currentTime = 0;
-            btnHoverSfx.play().catch(e => {});
-        }
-
-        // Select buttons with 'shuffle-btn' class
-        const shuffleBtns = document.querySelectorAll('.shuffle-btn');
-        shuffleBtns.forEach(btn => {
-            const originalText = btn.innerText; // Capture original text
-            btn.addEventListener('mouseenter', () => {
-                playBtnHoverSound();
-                shuffleText(btn, originalText, 300);
-            });
+        document.querySelectorAll('.shuffle-btn').forEach(btn => {
+            const originalText = btn.innerText;
+            btn.addEventListener('mouseenter', () => { playBtnHoverSound(); shuffleText(btn, originalText, 300); });
         });
 
-        // --- BUTTON CLICK LOGIC (DELAYED) ---
-        const btnClickSfx = document.getElementById('btn-click-sfx');
-        btnClickSfx.volume = 0.4; // Set volume 40%
-
-        // Select all elements with the 'click-trigger' class
-        const clickTargets = document.querySelectorAll('.click-trigger');
-
-        clickTargets.forEach(link => {
+        document.querySelectorAll('.click-trigger').forEach(link => {
             link.addEventListener('click', (e) => {
-                // 1. Check sound state
-                if (!isSoundOn) return; // If off, let default behavior happen (immediate jump)
-
-                // 2. If sound is ON, intervene to schedule the sound
-                // NOTE: We do NOT preventDefault. We let the link open immediately.
-                
-                // 3. Schedule Sound play after 1.5s
-                setTimeout(() => {
-                    btnClickSfx.currentTime = 0;
-                    btnClickSfx.play().catch(e => console.log("Audio play failed (tab likely backgrounded)", e));
-                }, 1500); // 1.5s delay
+                if (isSoundOn) setTimeout(() => { btnClickSfx.currentTime = 0; btnClickSfx.play().catch(e => {}); }, 1500);
             });
         });
 
-
-        // --- LENIS SMOOTH SCROLL SETUP ---
+        // --- LENIS SMOOTH SCROLL ---
         const lenis = new Lenis({
             duration: 1.2,
             easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -1014,26 +837,14 @@
             touchMultiplier: 2,
         });
 
-        // Lenis RAF loop
-        function raf(time) {
-            lenis.raf(time);
-            requestAnimationFrame(raf);
-        }
+        function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
         requestAnimationFrame(raf);
 
-        // --- GSAP SCROLLTRIGGER INTEGRATION WITH LENIS ---
         gsap.registerPlugin(ScrollTrigger);
-
-        // Sync ScrollTrigger with Lenis
         lenis.on('scroll', ScrollTrigger.update);
-
-        gsap.ticker.add((time) => {
-            lenis.raf(time * 1000);
-        });
-
+        gsap.ticker.add((time) => { lenis.raf(time * 1000); });
         gsap.ticker.lagSmoothing(0);
 
-        // --- NAVIGATION MENU ---
         document.querySelectorAll('.nav-link').forEach(link => {
             link.addEventListener('click', (e) => {
                 const target = e.target.getAttribute('data-target');
@@ -1043,536 +854,221 @@
 
         // --- CUSTOM CURSOR ---
         const cursor = document.getElementById('custom-cursor');
-        const interactiveElements = document.querySelectorAll('a, button, .cursor-pointer, .project-card, .nav-link, #sound-toggle');
-        
-        document.addEventListener('mousemove', (e) => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-        });
+        if (!isMobile) {
+            document.addEventListener('mousemove', (e) => {
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
+            });
+            document.querySelectorAll('a, button, .cursor-pointer, .project-card, .nav-link, #sound-toggle').forEach(el => {
+                el.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
+                el.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
+            });
+        }
 
-        interactiveElements.forEach(el => {
-            el.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
-            el.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
-        });
-
-        // --- THREE.JS SCENE (Background Stars) ---
+        // --- THREE.JS BACKGROUND ---
         const canvasContainer = document.getElementById('webgl-container');
         const scene = new THREE.Scene();
         scene.fog = new THREE.FogExp2(0x030305, 0.015);
-
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         camera.position.z = 5;
         camera.position.y = 2;
-
         const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         canvasContainer.appendChild(renderer.domElement);
 
-        // Floating Particles (Stars)
         const particlesGeometry = new THREE.BufferGeometry();
         const particlesCount = 1500;
         const posArray = new Float32Array(particlesCount * 3);
-        
         for(let i = 0; i < particlesCount; i++) {
             posArray[i * 3] = (Math.random() - 0.5) * 30;
             posArray[i * 3 + 1] = (Math.random() - 0.5) * 15;
             posArray[i * 3 + 2] = (Math.random() - 0.5) * 60;
         }
-
         particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-        const particlesMaterial = new THREE.PointsMaterial({
-            size: 0.03,
-            color: 0x00f0ff,
-            transparent: true,
-            opacity: 0.8,
-            blending: THREE.AdditiveBlending
-        });
+        const particlesMaterial = new THREE.PointsMaterial({ size: 0.03, color: 0x00f0ff, transparent: true, opacity: 0.8, blending: THREE.AdditiveBlending });
         const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
         scene.add(particlesMesh);
 
-        // Mouse tracking
-        let mouseX = 0;
-        let mouseY = 0;
-
+        let mouseX = 0, mouseY = 0;
         document.addEventListener('mousemove', (event) => {
             mouseX = (event.clientX - window.innerWidth / 2);
             mouseY = (event.clientY - window.innerHeight / 2);
         });
 
-        // Animation Loop for background
         const clock = new THREE.Clock();
-
         function animate() {
             const elapsedTime = clock.getElapsedTime();
-
-            // Rotate Particles
             particlesMesh.rotation.y = -elapsedTime * 0.05;
             particlesMesh.rotation.x = mouseY * 0.0001;
-
-            // Camera subtle movement
             camera.rotation.y += 0.05 * ((mouseX * 0.001) - camera.rotation.y);
             camera.rotation.x += 0.05 * ((mouseY * 0.001) - camera.rotation.x);
-
             renderer.render(scene, camera);
             requestAnimationFrame(animate);
         }
         animate();
 
-        // Window Resize for background
         window.addEventListener('resize', () => {
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
             renderer.setSize(window.innerWidth, window.innerHeight);
         });
 
-        // --- TORNADO VORTEX EFFECT ---
-        (function initTornado() {
-            const tornadoContainer = document.getElementById('tornado-container');
-            
-            // Create separate scene for tornado
-            const tornadoScene = new THREE.Scene();
-            
-            const tornadoCamera = new THREE.PerspectiveCamera(50, tornadoContainer.offsetWidth / tornadoContainer.offsetHeight, 0.1, 100);
-            tornadoCamera.position.set(0, 1.5, 4);
-            tornadoCamera.lookAt(0, 0.8, 0);
-            
-            const tornadoRenderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-            tornadoRenderer.setSize(tornadoContainer.offsetWidth, tornadoContainer.offsetHeight);
-            tornadoRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-            tornadoRenderer.setClearColor(0x000000, 0);
-            tornadoContainer.appendChild(tornadoRenderer.domElement);
-            
-            // Tornado Parameters
-            const tornadoParams = {
-                particleCount: 8000,
-                height: 3,
-                baseRadius: 0.8,
-                topRadius: 0.15,
-                rotationSpeed: 1.2,
-                riseSpeed: 0.5,
-                turbulence: 0.3
-            };
-            
-            // Create tornado particle system
-            const tornadoGeometry = new THREE.BufferGeometry();
-            const positions = new Float32Array(tornadoParams.particleCount * 3);
-            const colors = new Float32Array(tornadoParams.particleCount * 3);
-            const sizes = new Float32Array(tornadoParams.particleCount);
-            const randoms = new Float32Array(tornadoParams.particleCount * 3);
-            const speeds = new Float32Array(tornadoParams.particleCount);
-            
-            const primaryColor = new THREE.Color(0x00f0ff);
-            const secondaryColor = new THREE.Color(0xff8b4d);
-            const accentColor = new THREE.Color(0x7000ff);
-            
-            for (let i = 0; i < tornadoParams.particleCount; i++) {
-                // Initial positions (will be animated)
-                const y = Math.random() * tornadoParams.height;
-                const normalizedY = y / tornadoParams.height;
+        // --- TORNADO VORTEX EFFECT (Hidden on mobile via CSS) ---
+        if (!isMobile) {
+            (function initTornado() {
+                const tornadoContainer = document.getElementById('tornado-container');
+                const tornadoScene = new THREE.Scene();
+                const tornadoCamera = new THREE.PerspectiveCamera(50, tornadoContainer.offsetWidth / tornadoContainer.offsetHeight, 0.1, 100);
+                tornadoCamera.position.set(0, 1.5, 4);
+                tornadoCamera.lookAt(0, 0.8, 0);
+                const tornadoRenderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+                tornadoRenderer.setSize(tornadoContainer.offsetWidth, tornadoContainer.offsetHeight);
+                tornadoRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+                tornadoContainer.appendChild(tornadoRenderer.domElement);
                 
-                // Radius decreases as we go up (funnel shape)
-                const radius = tornadoParams.baseRadius * (1 - normalizedY * 0.8) + tornadoParams.topRadius * normalizedY;
-                const angle = Math.random() * Math.PI * 2;
+                const tornadoParams = { particleCount: 8000, height: 3, baseRadius: 0.8, topRadius: 0.15, rotationSpeed: 1.2, riseSpeed: 0.5, turbulence: 0.3 };
+                const tornadoGeometry = new THREE.BufferGeometry();
+                const positions = new Float32Array(tornadoParams.particleCount * 3);
+                const colors = new Float32Array(tornadoParams.particleCount * 3);
+                const sizes = new Float32Array(tornadoParams.particleCount);
+                const randoms = new Float32Array(tornadoParams.particleCount * 3);
+                const speeds = new Float32Array(tornadoParams.particleCount);
                 
-                positions[i * 3] = Math.cos(angle) * radius;
-                positions[i * 3 + 1] = y;
-                positions[i * 3 + 2] = Math.sin(angle) * radius;
+                const primaryColor = new THREE.Color(0x00f0ff);
+                const secondaryColor = new THREE.Color(0xff8b4d);
+                const accentColor = new THREE.Color(0x7000ff);
                 
-                // Random values for animation
-                randoms[i * 3] = Math.random();
-                randoms[i * 3 + 1] = Math.random();
-                randoms[i * 3 + 2] = Math.random();
-                
-                speeds[i] = 0.5 + Math.random() * 1.5;
-                
-                // Colors - gradient from primary to secondary based on height
-                const mixFactor = normalizedY + (Math.random() - 0.5) * 0.3;
-                const particleColor = new THREE.Color();
-                
-                if (mixFactor < 0.5) {
-                    particleColor.lerpColors(secondaryColor, primaryColor, mixFactor * 2);
-                } else {
-                    particleColor.lerpColors(primaryColor, accentColor, (mixFactor - 0.5) * 2);
+                for (let i = 0; i < tornadoParams.particleCount; i++) {
+                    const y = Math.random() * tornadoParams.height;
+                    const normalizedY = y / tornadoParams.height;
+                    const radius = tornadoParams.baseRadius * (1 - normalizedY * 0.8) + tornadoParams.topRadius * normalizedY;
+                    const angle = Math.random() * Math.PI * 2;
+                    positions[i * 3] = Math.cos(angle) * radius;
+                    positions[i * 3 + 1] = y;
+                    positions[i * 3 + 2] = Math.sin(angle) * radius;
+                    randoms[i * 3] = Math.random();
+                    randoms[i * 3 + 1] = Math.random();
+                    randoms[i * 3 + 2] = Math.random();
+                    speeds[i] = 0.5 + Math.random() * 1.5;
+                    const mixFactor = normalizedY + (Math.random() - 0.5) * 0.3;
+                    const particleColor = new THREE.Color();
+                    if (mixFactor < 0.5) particleColor.lerpColors(secondaryColor, primaryColor, mixFactor * 2);
+                    else particleColor.lerpColors(primaryColor, accentColor, (mixFactor - 0.5) * 2);
+                    colors[i * 3] = particleColor.r; colors[i * 3 + 1] = particleColor.g; colors[i * 3 + 2] = particleColor.b;
+                    sizes[i] = (0.02 + Math.random() * 0.03) * (1 - normalizedY * 0.5);
                 }
                 
-                colors[i * 3] = particleColor.r;
-                colors[i * 3 + 1] = particleColor.g;
-                colors[i * 3 + 2] = particleColor.b;
+                tornadoGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+                tornadoGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+                tornadoGeometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+                tornadoGeometry.setAttribute('aRandom', new THREE.BufferAttribute(randoms, 3));
+                tornadoGeometry.setAttribute('aSpeed', new THREE.BufferAttribute(speeds, 1));
                 
-                // Sizes - smaller at top
-                sizes[i] = (0.02 + Math.random() * 0.03) * (1 - normalizedY * 0.5);
-            }
-            
-            tornadoGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-            tornadoGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-            tornadoGeometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
-            tornadoGeometry.setAttribute('aRandom', new THREE.BufferAttribute(randoms, 3));
-            tornadoGeometry.setAttribute('aSpeed', new THREE.BufferAttribute(speeds, 1));
-            
-            // Custom shader material for tornado
-            const tornadoMaterial = new THREE.ShaderMaterial({
-                uniforms: {
-                    uTime: { value: 0 },
-                    uPixelRatio: { value: Math.min(window.devicePixelRatio, 2) },
-                    uHeight: { value: tornadoParams.height },
-                    uBaseRadius: { value: tornadoParams.baseRadius },
-                    uTopRadius: { value: tornadoParams.topRadius },
-                    uRotationSpeed: { value: tornadoParams.rotationSpeed },
-                    uRiseSpeed: { value: tornadoParams.riseSpeed },
-                    uTurbulence: { value: tornadoParams.turbulence }
-                },
-                vertexShader: `
-                    attribute float size;
-                    attribute vec3 aRandom;
-                    attribute float aSpeed;
-                    attribute vec3 color;
-                    
-                    uniform float uTime;
-                    uniform float uPixelRatio;
-                    uniform float uHeight;
-                    uniform float uBaseRadius;
-                    uniform float uTopRadius;
-                    uniform float uRotationSpeed;
-                    uniform float uRiseSpeed;
-                    uniform float uTurbulence;
-                    
-                    varying vec3 vColor;
-                    varying float vAlpha;
-                    
-                    void main() {
-                        vColor = color;
-                        
-                        vec3 pos = position;
-                        
-                        // Animate Y position (rising)
-                        float animatedY = mod(pos.y + uTime * uRiseSpeed * aSpeed, uHeight);
-                        float normalizedY = animatedY / uHeight;
-                        
-                        // Calculate radius at current height
-                        float radius = uBaseRadius * (1.0 - normalizedY * 0.8) + uTopRadius * normalizedY;
-                        
-                        // Add some variation to radius
-                        radius += sin(animatedY * 10.0 + uTime * 2.0) * 0.05 * (1.0 - normalizedY);
-                        
-                        // Original angle from position
-                        float originalAngle = atan(position.z, position.x);
-                        
-                        // Rotation speed increases with height
-                        float rotationMultiplier = 1.0 + normalizedY * 2.0;
-                        float angle = originalAngle + uTime * uRotationSpeed * rotationMultiplier * aSpeed;
-                        
-                        // Add turbulence
-                        angle += sin(animatedY * 5.0 + uTime * 3.0 + aRandom.x * 6.28) * uTurbulence * (1.0 - normalizedY * 0.5);
-                        
-                        // Final position
-                        pos.x = cos(angle) * radius * (0.8 + aRandom.x * 0.4);
-                        pos.y = animatedY;
-                        pos.z = sin(angle) * radius * (0.8 + aRandom.z * 0.4);
-                        
-                        // Add some waviness
-                        pos.x += sin(animatedY * 8.0 + uTime * 2.0) * 0.03;
-                        pos.z += cos(animatedY * 8.0 + uTime * 2.0) * 0.03;
-                        
-                        vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
-                        
-                        gl_Position = projectionMatrix * mvPosition;
-                        
-                        // Size based on height and distance
-                        float sizeMultiplier = 1.0 - normalizedY * 0.3;
-                        gl_PointSize = size * sizeMultiplier * uPixelRatio * (300.0 / -mvPosition.z);
-                        
-                        // Alpha fades at top and bottom
-                        vAlpha = smoothstep(0.0, 0.1, normalizedY) * smoothstep(1.0, 0.7, normalizedY);
-                        vAlpha *= 0.6 + aRandom.y * 0.4;
-                    }
-                `,
-                fragmentShader: `
-                    varying vec3 vColor;
-                    varying float vAlpha;
-                    
-                    void main() {
-                        // Circular point
-                        float distanceToCenter = length(gl_PointCoord - vec2(0.5));
-                        if (distanceToCenter > 0.5) discard;
-                        
-                        // Soft edges
-                        float alpha = 1.0 - smoothstep(0.3, 0.5, distanceToCenter);
-                        alpha *= vAlpha;
-                        
-                        // Add glow effect
-                        vec3 finalColor = vColor * (1.0 + (1.0 - distanceToCenter * 2.0) * 0.5);
-                        
-                        gl_FragColor = vec4(finalColor, alpha);
-                    }
-                `,
-                transparent: true,
-                depthWrite: false,
-                blending: THREE.AdditiveBlending,
-                vertexColors: true
-            });
-            
-            const tornadoParticles = new THREE.Points(tornadoGeometry, tornadoMaterial);
-            tornadoScene.add(tornadoParticles);
-            
-            // Add floor glow
-            const floorGeometry = new THREE.PlaneGeometry(2, 2, 32, 32);
-            const floorMaterial = new THREE.ShaderMaterial({
-                uniforms: {
-                    uTime: { value: 0 },
-                    uColor1: { value: new THREE.Color(0xff8b4d) },
-                    uColor2: { value: new THREE.Color(0x00f0ff) }
-                },
-                vertexShader: `
-                    varying vec2 vUv;
-                    void main() {
-                        vUv = uv;
-                        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-                    }
-                `,
-                fragmentShader: `
-                    uniform float uTime;
-                    uniform vec3 uColor1;
-                    uniform vec3 uColor2;
-                    varying vec2 vUv;
-                    
-                    void main() {
-                        vec2 center = vUv - 0.5;
-                        float dist = length(center);
-                        
-                        // Rotating pattern
-                        float angle = atan(center.y, center.x);
-                        float pattern = sin(angle * 8.0 + uTime * 2.0) * 0.5 + 0.5;
-                        pattern *= sin(dist * 20.0 - uTime * 3.0) * 0.5 + 0.5;
-                        
-                        // Radial gradient
-                        float radialFade = 1.0 - smoothstep(0.1, 0.5, dist);
-                        
-                        vec3 color = mix(uColor1, uColor2, pattern);
-                        float alpha = radialFade * 0.4 * pattern;
-                        
-                        gl_FragColor = vec4(color, alpha);
-                    }
-                `,
-                transparent: true,
-                depthWrite: false,
-                blending: THREE.AdditiveBlending,
-                side: THREE.DoubleSide
-            });
-            
-            const floor = new THREE.Mesh(floorGeometry, floorMaterial);
-            floor.rotation.x = -Math.PI / 2;
-            floor.position.y = 0;
-            tornadoScene.add(floor);
-
-            // Add Central Core (Floating Crystal)
-            const coreGeometry = new THREE.IcosahedronGeometry(0.5, 0);
-            const coreMaterial = new THREE.MeshBasicMaterial({ 
-                color: 0xffffff, 
-                wireframe: true, 
-                transparent: true, 
-                opacity: 0.15,
-                blending: THREE.AdditiveBlending
-            });
-            const core = new THREE.Mesh(coreGeometry, coreMaterial);
-            core.position.y = 1.2;
-            tornadoScene.add(core);
-
-            // Add Inner Core (Solid Glow)
-            const innerCoreGeometry = new THREE.IcosahedronGeometry(0.2, 0);
-            const innerCoreMaterial = new THREE.MeshBasicMaterial({
-                color: 0x00f0ff,
-                transparent: true,
-                opacity: 0.4,
-                blending: THREE.AdditiveBlending
-            });
-            const innerCore = new THREE.Mesh(innerCoreGeometry, innerCoreMaterial);
-            innerCore.position.y = 1.2;
-            tornadoScene.add(innerCore);
-            
-            // Add some ambient light rings
-            const ringCount = 5;
-            for (let i = 0; i < ringCount; i++) {
-                const ringGeometry = new THREE.RingGeometry(0.3 + i * 0.15, 0.32 + i * 0.15, 64);
-                const ringMaterial = new THREE.MeshBasicMaterial({
-                    color: i % 2 === 0 ? 0x00f0ff : 0xff8b4d,
-                    transparent: true,
-                    opacity: 0.1,
-                    side: THREE.DoubleSide,
-                    blending: THREE.AdditiveBlending
+                const tornadoMaterial = new THREE.ShaderMaterial({
+                    uniforms: { uTime: { value: 0 }, uPixelRatio: { value: Math.min(window.devicePixelRatio, 2) }, uHeight: { value: tornadoParams.height }, uBaseRadius: { value: tornadoParams.baseRadius }, uTopRadius: { value: tornadoParams.topRadius }, uRotationSpeed: { value: tornadoParams.rotationSpeed }, uRiseSpeed: { value: tornadoParams.riseSpeed }, uTurbulence: { value: tornadoParams.turbulence } },
+                    vertexShader: `
+                        attribute float size; attribute vec3 aRandom; attribute float aSpeed; attribute vec3 color;
+                        uniform float uTime; uniform float uPixelRatio; uniform float uHeight; uniform float uBaseRadius; uniform float uTopRadius; uniform float uRotationSpeed; uniform float uRiseSpeed; uniform float uTurbulence;
+                        varying vec3 vColor; varying float vAlpha;
+                        void main() {
+                            vColor = color; vec3 pos = position;
+                            float animatedY = mod(pos.y + uTime * uRiseSpeed * aSpeed, uHeight);
+                            float normalizedY = animatedY / uHeight;
+                            float radius = uBaseRadius * (1.0 - normalizedY * 0.8) + uTopRadius * normalizedY;
+                            radius += sin(animatedY * 10.0 + uTime * 2.0) * 0.05 * (1.0 - normalizedY);
+                            float originalAngle = atan(position.z, position.x);
+                            float rotationMultiplier = 1.0 + normalizedY * 2.0;
+                            float angle = originalAngle + uTime * uRotationSpeed * rotationMultiplier * aSpeed;
+                            angle += sin(animatedY * 5.0 + uTime * 3.0 + aRandom.x * 6.28) * uTurbulence * (1.0 - normalizedY * 0.5);
+                            pos.x = cos(angle) * radius * (0.8 + aRandom.x * 0.4); pos.y = animatedY; pos.z = sin(angle) * radius * (0.8 + aRandom.z * 0.4);
+                            pos.x += sin(animatedY * 8.0 + uTime * 2.0) * 0.03; pos.z += cos(animatedY * 8.0 + uTime * 2.0) * 0.03;
+                            vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
+                            gl_Position = projectionMatrix * mvPosition;
+                            float sizeMultiplier = 1.0 - normalizedY * 0.3;
+                            gl_PointSize = size * sizeMultiplier * uPixelRatio * (300.0 / -mvPosition.z);
+                            vAlpha = smoothstep(0.0, 0.1, normalizedY) * smoothstep(1.0, 0.7, normalizedY); vAlpha *= 0.6 + aRandom.y * 0.4;
+                        }
+                    `,
+                    fragmentShader: `varying vec3 vColor; varying float vAlpha; void main() { float distanceToCenter = length(gl_PointCoord - vec2(0.5)); if (distanceToCenter > 0.5) discard; float alpha = 1.0 - smoothstep(0.3, 0.5, distanceToCenter); alpha *= vAlpha; vec3 finalColor = vColor * (1.0 + (1.0 - distanceToCenter * 2.0) * 0.5); gl_FragColor = vec4(finalColor, alpha); }`,
+                    transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, vertexColors: true
                 });
-                const ring = new THREE.Mesh(ringGeometry, ringMaterial);
-                ring.rotation.x = -Math.PI / 2;
-                ring.position.y = 0.01 + i * 0.01;
-                tornadoScene.add(ring);
-            }
-            
-            // Handle Mobile Visibility
-            function updateCoreVisibility() {
-                const isMobile = window.innerWidth < 768;
-                core.visible = !isMobile;
-                innerCore.visible = !isMobile;
-            }
-            updateCoreVisibility(); // Initial check
-
-            // Tornado animation clock
-            const tornadoClock = new THREE.Clock();
-            
-            function animateTornado() {
-                const elapsedTime = tornadoClock.getElapsedTime();
                 
-                // Update uniforms
-                tornadoMaterial.uniforms.uTime.value = elapsedTime;
-                floorMaterial.uniforms.uTime.value = elapsedTime;
+                const tornadoParticles = new THREE.Points(tornadoGeometry, tornadoMaterial);
+                tornadoScene.add(tornadoParticles);
 
-                // Animate Core
-                core.rotation.x = elapsedTime * 0.2;
-                core.rotation.y = elapsedTime * 0.5;
-                innerCore.rotation.x = -elapsedTime * 0.4;
-                innerCore.rotation.y = -elapsedTime * 0.2;
-                
-                // Float Core
-                const floatY = 1.2 + Math.sin(elapsedTime) * 0.1;
-                core.position.y = floatY;
-                innerCore.position.y = floatY;
-                
-                // Subtle camera movement
-                tornadoCamera.position.x = Math.sin(elapsedTime * 0.2) * 0.3;
-                tornadoCamera.lookAt(0, 0.8, 0);
-                
-                tornadoRenderer.render(tornadoScene, tornadoCamera);
-                requestAnimationFrame(animateTornado);
-            }
-            animateTornado();
-            
-            // Handle resize for tornado
-            window.addEventListener('resize', () => {
-                const width = tornadoContainer.offsetWidth;
-                const height = tornadoContainer.offsetHeight;
-                
-                tornadoCamera.aspect = width / height;
-                tornadoCamera.updateProjectionMatrix();
-                tornadoRenderer.setSize(width, height);
-                
-                updateCoreVisibility(); // Check visibility on resize
-            });
-        })();
+                const coreGeometry = new THREE.IcosahedronGeometry(0.5, 0);
+                const coreMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true, transparent: true, opacity: 0.15, blending: THREE.AdditiveBlending });
+                const core = new THREE.Mesh(coreGeometry, coreMaterial); core.position.y = 1.2; tornadoScene.add(core);
 
-        // --- GSAP ANIMATIONS ---
+                const innerCoreGeometry = new THREE.IcosahedronGeometry(0.2, 0);
+                const innerCoreMaterial = new THREE.MeshBasicMaterial({ color: 0x00f0ff, transparent: true, opacity: 0.4, blending: THREE.AdditiveBlending });
+                const innerCore = new THREE.Mesh(innerCoreGeometry, innerCoreMaterial); innerCore.position.y = 1.2; tornadoScene.add(innerCore);
 
-        // Hero Reveal Animation
-        gsap.from('.reveal-text', {
-            y: 50,
-            opacity: 0,
-            duration: 1,
-            stagger: 0.1,
-            ease: "power3.out",
-            delay: 0.5
-        });
+                const tornadoClock = new THREE.Clock();
+                function animateTornado() {
+                    const elapsedTime = tornadoClock.getElapsedTime();
+                    tornadoMaterial.uniforms.uTime.value = elapsedTime;
+                    core.rotation.x = elapsedTime * 0.2; core.rotation.y = elapsedTime * 0.5;
+                    innerCore.rotation.x = -elapsedTime * 0.4; innerCore.rotation.y = -elapsedTime * 0.2;
+                    const floatY = 1.2 + Math.sin(elapsedTime) * 0.1; core.position.y = floatY; innerCore.position.y = floatY;
+                    tornadoCamera.position.x = Math.sin(elapsedTime * 0.2) * 0.3; tornadoCamera.lookAt(0, 0.8, 0);
+                    tornadoRenderer.render(tornadoScene, tornadoCamera);
+                    requestAnimationFrame(animateTornado);
+                }
+                animateTornado();
 
-        // Scroll-Based Camera Movement (Simplified for just stars)
-        ScrollTrigger.create({
-            trigger: "body",
-            start: "top top",
-            end: "bottom bottom",
-            scrub: 1,
-            onUpdate: (self) => {
-                camera.position.z = 5 - (self.progress * 2);
-            }
-        });
-
-        // --- HORIZONTAL SCROLL FOR PROJECTS ---
-        const projectsContainer = document.getElementById("projects-container");
-        const projectsWrapper = document.getElementById("projects-wrapper");
-
-        // Calculate the scroll distance
-        function getScrollAmount() {
-            return projectsContainer.scrollWidth - window.innerWidth;
+                window.addEventListener('resize', () => {
+                    tornadoCamera.aspect = tornadoContainer.offsetWidth / tornadoContainer.offsetHeight;
+                    tornadoCamera.updateProjectionMatrix();
+                    tornadoRenderer.setSize(tornadoContainer.offsetWidth, tornadoContainer.offsetHeight);
+                });
+            })();
         }
 
-        // Create the horizontal scroll animation
-        gsap.to(projectsContainer, {
-            x: () => -getScrollAmount(),
-            ease: "none",
-            overwrite: "auto",
-            scrollTrigger: {
-                trigger: projectsWrapper,
-                start: "top top",
-                end: () => `+=${getScrollAmount()}`,
-                pin: true,
-                scrub: 1,
-                invalidateOnRefresh: true,
-                anticipatePin: 1,
-            }
-        });
-
-        // Fade in sections on scroll
-        gsap.utils.toArray('#about .glass-panel, #expertise .glass-panel').forEach(panel => {
-            gsap.from(panel, {
-                opacity: 0,
-                y: 50,
-                duration: 1,
-                scrollTrigger: {
-                    trigger: panel,
-                    start: "top 85%",
-                    end: "bottom 20%",
-                    toggleActions: "play none none reverse"
-                }
-            });
-        });
-
-        // Timeline items animation
-        gsap.utils.toArray('#experience .relative').forEach((item, i) => {
-            gsap.from(item, {
-                opacity: 0,
-                x: -30,
-                duration: 0.8,
-                delay: i * 0.1,
-                scrollTrigger: {
-                    trigger: item,
-                    start: "top 85%",
-                    toggleActions: "play none none reverse"
-                }
-            });
-        });
-
-        // Contact section animation
-        gsap.from('#contact .relative.z-10', {
-            opacity: 0,
-            y: 50,
-            duration: 1,
-            scrollTrigger: {
-                trigger: '#contact',
-                start: "top 70%",
-                toggleActions: "play none none reverse"
-            }
-        });
-
-        // --- NAV HIGHLIGHTING ---
-        const sections = ['hero', 'about', 'expertise', 'projects-wrapper', 'contact'];
+        // --- GSAP ANIMATIONS ---
+        gsap.from('.reveal-text', { y: 50, opacity: 0, duration: 1, stagger: 0.1, ease: "power3.out", delay: 0.5 });
         
+        ScrollTrigger.create({
+            trigger: "body", start: "top top", end: "bottom bottom", scrub: 1,
+            onUpdate: (self) => { camera.position.z = 5 - (self.progress * 2); }
+        });
+
+        const projectsContainer = document.getElementById("projects-container");
+        const projectsWrapper = document.getElementById("projects-wrapper");
+        function getScrollAmount() { return projectsContainer.scrollWidth - window.innerWidth; }
+        
+        gsap.to(projectsContainer, {
+            x: () => -getScrollAmount(), ease: "none", overwrite: "auto",
+            scrollTrigger: { trigger: projectsWrapper, start: "top top", end: () => `+=${getScrollAmount()}`, pin: true, scrub: 1, invalidateOnRefresh: true, anticipatePin: 1 }
+        });
+
+        gsap.utils.toArray('#about .glass-panel, #expertise .glass-panel').forEach(panel => {
+            gsap.from(panel, { opacity: 0, y: 50, duration: 1, scrollTrigger: { trigger: panel, start: "top 85%", end: "bottom 20%", toggleActions: "play none none reverse" } });
+        });
+        
+        gsap.utils.toArray('#experience .relative').forEach((item, i) => {
+            gsap.from(item, { opacity: 0, x: -30, duration: 0.8, delay: i * 0.1, scrollTrigger: { trigger: item, start: "top 85%", toggleActions: "play none none reverse" } });
+        });
+        
+        gsap.from('#contact .relative.z-10', { opacity: 0, y: 50, duration: 1, scrollTrigger: { trigger: '#contact', start: "top 70%", toggleActions: "play none none reverse" } });
+
+        const sections = ['hero', 'about', 'expertise', 'projects-wrapper', 'contact'];
         sections.forEach(id => {
             const section = document.getElementById(id);
             if(section) {
                 ScrollTrigger.create({
-                    trigger: section,
-                    start: "top 50%", 
-                    end: "bottom 50%",
-                    onEnter: () => updateNav(id),
-                    onEnterBack: () => updateNav(id)
+                    trigger: section, start: "top 50%", end: "bottom 50%",
+                    onEnter: () => updateNav(id), onEnterBack: () => updateNav(id)
                 });
             }
         });
-
         function updateNav(id) {
             document.querySelectorAll('.nav-link').forEach(link => {
                 link.classList.remove('active');
-                if(link.getAttribute('data-target') === `#${id}`) {
-                    link.classList.add('active');
-                }
+                if(link.getAttribute('data-target') === `#${id}`) link.classList.add('active');
             });
         }
-
     </script>
 </body>
 </html>
